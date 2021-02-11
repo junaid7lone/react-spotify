@@ -1,19 +1,24 @@
-.App {
-  text-align: center;
+/* @import "~bootstrap/scss/bootstrap"; */
+
+body {
+  background-color: #140d36;
 }
+
+/* .App {
+} */
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  height: 50px;
+  margin: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -35,4 +40,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
