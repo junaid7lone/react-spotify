@@ -1,24 +1,31 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import PlaylistCard from "./PlaylistCard";
+import findLocally from "../utils/getFromLocalStorage";
 
-export default function SpotifyList() {
+export default function SpotifyList({ localData, updateLocalData }) {
   return (
     <div>
-      local storage
-      <Card>
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">
-            Card Subtitle
-          </Card.Subtitle>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Card.Link href="#">Card Link</Card.Link>
-          <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
-      </Card>
+      <div className="section-header h5 text-white mb-5">Saved playlist</div>
+      {localData?.length ? (
+        localData.map((item) => {
+          const savedLocally =
+            localData?.length && findLocally(item.id, localData);
+
+          const props = {
+            key: item.id,
+            item: item,
+            savedLocally: savedLocally,
+            updateLocalData: updateLocalData,
+          };
+
+          return <PlaylistCard {...props} />;
+        })
+      ) : (
+        <div className="text-white text-center">
+          Create some awesome playlist to listen!<br></br>
+          Click "Add to my list" button on the playlist you lick
+        </div>
+      )}
     </div>
   );
 }

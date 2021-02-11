@@ -3,7 +3,7 @@ import { Card, Media } from "react-bootstrap";
 import PlaylistPlaceholder from "../playlist-placeholder.png";
 
 const PlaylistCard = (props) => {
-  const { item } = props;
+  const { item, savedLocally, updateLocalData } = props;
 
   return (
     <Card key={item.id} style={{ marginBottom: "20px" }}>
@@ -16,8 +16,13 @@ const PlaylistCard = (props) => {
           </Media.Body>
         </Media>
         <br></br>
-        <Card.Link href={item.href}>Listen</Card.Link>
-        <Card.Link href="#">Add to local list</Card.Link>
+        {/* <Card.Link href={item.href}>Listen</Card.Link> */}
+        <Card.Link
+          href="#"
+          onClick={() => updateLocalData(item, savedLocally ? "remove" : "add")}
+        >
+          {savedLocally ? "Remove from " : "Add to"} my list
+        </Card.Link>
       </Card.Body>
     </Card>
   );
