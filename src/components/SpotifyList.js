@@ -5,7 +5,7 @@ import { FEATURED_LIST_URL, AUTH_TOKEN } from "./Constants";
 import PlaylistCard from "./PlaylistCard";
 import { fakeData } from "../utils/FakeData";
 import findLocally from "../utils/getFromLocalStorage";
-import { getAuthToken } from "../utils/SpotifyAuth";
+import { getAuthToken, getAuth } from "../utils/SpotifyAuth";
 
 const playListParams = {
   country: "IN",
@@ -38,7 +38,11 @@ export default function SpotifyList({ localData, updateLocalData }) {
   };
 
   if (loading) return <p className="text-white">Loading...</p>;
-  if (error) return <p className="text-white">Error!</p>;
+  if (error) {
+    getAuth();
+
+    return <p className="text-white">Error! please refresh and try again.</p>;
+  }
 
   return (
     <div>

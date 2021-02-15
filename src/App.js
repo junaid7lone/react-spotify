@@ -58,6 +58,11 @@ function SpotifyWrapper() {
       <HeaderComp />
       <Container className="main-container">
         <Row>
+          <Col className="text-center text-secondary">
+            Drag from left and drop to right playist to save it in your list.
+          </Col>
+        </Row>
+        <Row>
           <Col className="list-block spotify-list-wrapper">
             {accessToken ? (
               <SpotifyList

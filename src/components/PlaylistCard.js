@@ -1,6 +1,8 @@
-import React from "react";
-import { Card, Media } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, Media, Accordion, Button } from "react-bootstrap";
 import PlaylistPlaceholder from "../playlist-placeholder.png";
+
+import SongsList from "./SongsList.js";
 
 const PlaylistCard = (props) => {
   const { item, savedLocally, updateLocalData, draggable, onDrag } = props;
@@ -39,6 +41,7 @@ const PlaylistCard = (props) => {
               </Card.Link>
             </h5>
             <p className="mb-2 text-muted">{item.description}</p>
+            <SongsExpander tracks={item.tracks} id={item.id} />
           </Media.Body>
         </Media>
       </Card.Body>
@@ -66,6 +69,28 @@ const Thumbnail = ({ imageUrl, listName }) => {
         />
       )}
     </span>
+  );
+};
+
+const SongsExpander = (props) => {
+  const { tracks, id } = props;
+
+  const [showTrack, toggleTracks] = useState(false);
+
+  const onToggle = () => {
+    toggleTracks(!showTrack);
+  };
+
+  return (
+    <div>
+      <div onClick={onToggle}>
+        <span className=" small cursor-pointer">
+          {showTrack ? "Hide " : "Show "}
+          {tracks.total} Tracks
+        </span>
+      </div>
+      {showTrack ? <SongsList url={tracks.href} /> : null}
+    </div>
   );
 };
 
