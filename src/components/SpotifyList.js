@@ -1,12 +1,11 @@
 import React from "react";
-// import { Card } from "react-bootstrap";
 import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
 import { FEATURED_LIST_URL, AUTH_TOKEN } from "./Constants";
 import PlaylistCard from "./PlaylistCard";
 import { fakeData } from "../utils/FakeData";
 import findLocally from "../utils/getFromLocalStorage";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { getAuthToken } from "../utils/SpotifyAuth";
 
 const playListParams = {
   country: "IN",
@@ -22,16 +21,21 @@ const useAxios = makeUseAxios({
     method: "get",
     baseURL: FEATURED_LIST_URL,
     headers: {
-      Authorization: "Bearer " + AUTH_TOKEN, //the token is a variable which holds the token
+      Authorization: "Bearer " + getAuthToken(), //the token is a variable which holds the token
     },
   }),
 });
 
 export default function SpotifyList({ localData, updateLocalData }) {
   const [{ data, loading, error }, refetch] = useAxios(`/?${params}`);
+
   // const data = fakeData;
   // const loading = false,
   //   error = null;
+
+  const onDrag = (ev, data) => {
+    ev.dataTransfer.setData("text", data);
+  };
 
   if (loading) return <p className="text-white">Loading...</p>;
   if (error) return <p className="text-white">Error!</p>;
@@ -41,32 +45,22 @@ export default function SpotifyList({ localData, updateLocalData }) {
       <div className="section-header h5 text-white mb-5">
         Today's featured playlist
       </div>
+      <div className="list-wrapper">
+        {data?.playlists?.items.map((item, index) => {
+          const savedLocally = data?.length && findLocally(item.id, localData);
 
-      {data?.playlists?.items.map((item, index) => {
-        const savedLocally = data?.length && findLocally(item.id, localData);
+          const props = {
+            key: item.id,
+            item: item,
+            savedLocally: savedLocally,
+            updateLocalData: updateLocalData,
+            draggable: true,
+            onDrag: onDrag,
+          };
 
-        const props = {
-          key: item.id,
-          item: item,
-          savedLocally: savedLocally,
-          updateLocalData: updateLocalData,
-        };
-
-        // return <PlaylistCard {...props} />;
-        return (
-          <Draggable draggableId={item.id} index={index}>
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <PlaylistCard {...props} />
-              </div>
-            )}
-          </Draggable>
-        );
-      })}
+          return <PlaylistCard {...props} />;
+        })}
+      </div>
     </div>
   );
 }
