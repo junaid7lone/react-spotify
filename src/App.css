@@ -16,6 +16,11 @@ header {
   padding: 0 10px;
   z-index: 10;
 }
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .main-container {
   margin-top: 100px;
 }
@@ -26,4 +31,30 @@ header {
   margin: 20px;
   background-color: #140d36;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.list-wrapper {
+  max-height: calc(100vh - 280px);
+  overflow: auto;
+  margin-bottom: 40px;
+}
+
+.media-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.media-header a {
+  color: #000;
+}
+.thumb {
+  border-radius: 5px;
+}
+.draggable {
+  cursor: move;
+}
+
+.card-body {
+  padding: 10px;
 }
